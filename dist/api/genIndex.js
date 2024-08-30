@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.createIndexFileContent = void 0;
-const constants_1 = require("../constants");
-const naming_1 = require("../utils/naming");
+import { FILE_HEADER_COMMENT } from "../constants";
+import { getModuleFileName } from "../utils/naming";
 /**
  * Creates the content for the index file that combines all module exports.
  *
@@ -15,10 +12,10 @@ const naming_1 = require("../utils/naming");
  *                  corresponding file and export names.
  * @returns The complete content string for the index file.
  */
-const createIndexFileContent = (modules) => {
+export const createIndexFileContent = (modules) => {
     // Generate import statements for each module
     const imports = modules
-        .map((module) => `import { ${module.toUpperCase()}_PATHS } from './${(0, naming_1.getModuleFileName)(module)}';`)
+        .map((module) => `import { ${module.toUpperCase()}_PATHS } from './${getModuleFileName(module)}';`)
         .join("\n");
     // Aggregate all module exports into the API_PATHS object
     const exports = modules
@@ -26,7 +23,7 @@ const createIndexFileContent = (modules) => {
         .join("\n");
     // Return the final content for the index file, including the auto-generated header comment
     return `
-${constants_1.FILE_HEADER_COMMENT}
+${FILE_HEADER_COMMENT}
 
 ${imports}
 
@@ -35,4 +32,3 @@ ${exports}
 } as const;
 `;
 };
-exports.createIndexFileContent = createIndexFileContent;

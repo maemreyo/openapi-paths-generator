@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.createModuleFileContent = void 0;
-const constants_1 = require("../constants");
+import { FILE_HEADER_COMMENT } from "../constants";
 /**
  * Generates the content for a module file that exports API path constants.
  *
@@ -43,7 +40,7 @@ const constants_1 = require("../constants");
  * //   CREATE_USER: "`/user`",
  * // } as const;
  */
-const createModuleFileContent = (moduleName, apiPaths) => {
+export const createModuleFileContent = (moduleName, apiPaths) => {
     /**
      * Converts the apiPaths object into a formatted string suitable for
      * inclusion in the generated module file. Each key-value pair in the
@@ -61,11 +58,10 @@ const createModuleFileContent = (moduleName, apiPaths) => {
             .join("\n");
     };
     return `
-${constants_1.FILE_HEADER_COMMENT}
+${FILE_HEADER_COMMENT}
 
 export const ${moduleName.toUpperCase()}_PATHS = {
 ${convertToString(apiPaths)}
 } as const;
 `;
 };
-exports.createModuleFileContent = createModuleFileContent;
