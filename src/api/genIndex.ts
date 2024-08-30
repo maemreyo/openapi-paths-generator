@@ -1,7 +1,5 @@
-import {
-  FILE_HEADER_COMMENT,
-  MODULE_FILE_EXTENSION,
-} from "../constants";
+import { FILE_HEADER_COMMENT, MODULE_FILE_EXTENSION } from "../constants";
+import { getModuleFileName } from "../utils/naming";
 
 /**
  * Creates the content for the index file that combines all module exports.
@@ -20,7 +18,9 @@ export const createIndexFileContent = (modules: string[]): string => {
   const imports = modules
     .map(
       (module) =>
-        `import { ${module.toUpperCase()}_PATHS } from './${module.toLowerCase()}${MODULE_FILE_EXTENSION}';`
+        `import { ${module.toUpperCase()}_PATHS } from './${getModuleFileName(
+          module
+        )}';`
     )
     .join("\n");
 
