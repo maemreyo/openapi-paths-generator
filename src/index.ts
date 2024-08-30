@@ -10,9 +10,7 @@ import { processModules } from "./utils/processing";
  * Generate API paths based on an OpenAPI spec file.
  * @param options - The options object containing all necessary parameters.
  */
-export const generateApiPathsFromSpec = (
-  options: GenerateApiPathsOptions
-): void => {
+const generateApiPathsFromSpec = (options: GenerateApiPathsOptions): void => {
   try {
     const { openApiPath, outputDir, customName } = options;
 
@@ -44,8 +42,4 @@ export const generateApiPathsFromSpec = (
   }
 };
 
-generateApiPathsFromSpec({
-  openApiPath: "./mocks/openapi.yaml",
-  outputDir: "./mocks",
-  customName: "duyhoang",
-});
+export default generateApiPathsFromSpec;

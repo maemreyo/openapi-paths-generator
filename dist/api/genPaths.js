@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateApiPaths = void 0;
-const path_1 = require("../utils/path");
+import { getTopLevelKey, toUpperSnakeCase, generatePathFunction, } from "../utils/path";
 /**
  * Generates API paths grouped by top-level keys from an OpenAPI document.
  *
@@ -41,18 +38,18 @@ const path_1 = require("../utils/path");
  * //   }
  * // }
  */
-const generateApiPaths = (paths) => {
+export const generateApiPaths = (paths) => {
     return Object.entries(paths).reduce((acc, [path]) => {
         // Extract the top-level key from the path, e.g., "users" from "/users/{userId}"
-        const topLevelKey = (0, path_1.getTopLevelKey)(path);
+        const topLevelKey = getTopLevelKey(path);
         // Remove dynamic segments (like IDs) from the path and format it
         const pathWithoutIds = path.replace(/\/\{.*?\}/g, "").replace(/^\//, "");
-        const keyBase = (0, path_1.toUpperSnakeCase)(pathWithoutIds);
+        const keyBase = toUpperSnakeCase(pathWithoutIds);
         // Determine if the path is a "detail" path (e.g., ends with an ID or parameter)
         const isDetail = /{[^}]+}$/.test(path);
         const key = isDetail ? `${keyBase}_DETAIL` : keyBase;
         // Generate the function or string that handles dynamic path parameters
-        const pathFunction = (0, path_1.generatePathFunction)(path);
+        const pathFunction = generatePathFunction(path);
         // Initialize the top-level key object if it doesn't already exist
         if (!acc[topLevelKey]) {
             acc[topLevelKey] = {};
@@ -62,4 +59,3 @@ const generateApiPaths = (paths) => {
         return acc;
     }, {});
 };
-exports.generateApiPaths = generateApiPaths;

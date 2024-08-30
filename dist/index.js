@@ -1,12 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateApiPathsFromSpec = void 0;
-const file_1 = require("./utils/file");
-const paths_1 = require("./config/paths");
-const genPaths_1 = require("./api/genPaths");
-const logging_1 = require("./utils/logging");
-const output_1 = require("./utils/output");
-const processing_1 = require("./utils/processing");
+import { readYamlFile } from "./utils/file";
+import { resolvePaths } from "./config/paths";
+import { generateApiPaths } from "./api/genPaths";
+import { logStart, logCompletion } from "./utils/logging";
+import { prepareOutputDirectory } from "./utils/output";
+import { processModules } from "./utils/processing";
 /**
  * Generate API paths based on an OpenAPI spec file.
  * @param options - The options object containing all necessary parameters.
@@ -14,25 +11,20 @@ const processing_1 = require("./utils/processing");
 const generateApiPathsFromSpec = (options) => {
     try {
         const { openApiPath, outputDir, customName } = options;
-        (0, logging_1.logStart)();
+        logStart();
         // Prepare the output directory
-        const moduleOutputDir = (0, output_1.prepareOutputDirectory)(outputDir, customName);
+        const moduleOutputDir = prepareOutputDirectory(outputDir, customName);
         // Resolve the paths configuration
-        const pathsConfig = (0, paths_1.resolvePaths)(openApiPath, outputDir);
+        const pathsConfig = resolvePaths(openApiPath, outputDir);
         // Read and parse the OpenAPI YAML file
-        const openApiDoc = (0, file_1.readYamlFile)(pathsConfig.openApiFilePath);
+        const openApiDoc = readYamlFile(pathsConfig.openApiFilePath);
         // Generate the API paths and process the modules
-        const apiPaths = (0, genPaths_1.generateApiPaths)(openApiDoc.paths);
-        (0, processing_1.processModules)(moduleOutputDir, apiPaths);
-        (0, logging_1.logCompletion)();
+        const apiPaths = generateApiPaths(openApiDoc.paths);
+        processModules(moduleOutputDir, apiPaths);
+        logCompletion();
     }
     catch (error) {
         console.error("❌ An error occurred during the API paths generation process:", error);
     }
 };
-exports.generateApiPathsFromSpec = generateApiPathsFromSpec;
-(0, exports.generateApiPathsFromSpec)({
-    openApiPath: "./mocks/openapi.yaml",
-    outputDir: "./mocks",
-    customName: "duyhoang",
-});
+export default generateApiPathsFromSpec;
