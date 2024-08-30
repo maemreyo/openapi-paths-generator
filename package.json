@@ -1,6 +1,6 @@
 {
   "name": "openapi-paths-gen",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "type": "module",
   "description": "A TypeScript utility for generating strongly-typed API path functions from an OpenAPI YAML specification.",
   "main": "dist/index.js",
