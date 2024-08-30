@@ -11,6 +11,7 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
+    "declaration": true
   },
   "include": ["src/**/*"], // Include all TypeScript files under src
   "exclude": ["node_modules", "dist"] // Exclude node_modules and dist from compilation
