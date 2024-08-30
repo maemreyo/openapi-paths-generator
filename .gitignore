@@ -1,6 +1,5 @@
 # Node.js dependencies
 node_modules/
-dist/
 .build/
 
 # TypeScript cache and build artifacts
