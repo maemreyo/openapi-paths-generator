@@ -28,7 +28,7 @@ const path_1 = require("../utils/path");
  * };
  *
  * const result = generateApiPaths(paths);
- * console.log(result);
+ * logger.info(result);
  *
  * // Output:
  * // {

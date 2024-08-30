@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createIndexFileContent = void 0;
 const constants_1 = require("../constants");
+const naming_1 = require("../utils/naming");
 /**
  * Creates the content for the index file that combines all module exports.
  *
@@ -17,7 +18,7 @@ const constants_1 = require("../constants");
 const createIndexFileContent = (modules) => {
     // Generate import statements for each module
     const imports = modules
-        .map((module) => `import { ${module.toUpperCase()}_PATHS } from './${module.toLowerCase()}${constants_1.MODULE_FILE_EXTENSION}';`)
+        .map((module) => `import { ${module.toUpperCase()}_PATHS } from './${(0, naming_1.getModuleFileName)(module)}';`)
         .join("\n");
     // Aggregate all module exports into the API_PATHS object
     const exports = modules

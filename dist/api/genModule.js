@@ -30,7 +30,7 @@ const constants_1 = require("../constants");
  * };
  *
  * const content = createModuleFileContent(moduleName, apiPaths);
- * console.log(content);
+ * logger.info(content);
  *
  * // Output:
  * // // ===========================================
