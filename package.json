@@ -1,6 +1,6 @@
 {
   "name": "openapi-paths-gen",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A TypeScript utility for generating strongly-typed API path functions from an OpenAPI YAML specification.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,8 @@
     "dev": "ts-node src/index.ts",
     "watch": "tsc --watch",
     "clean": "rm -rf dist",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "release": "node scripts/release.js"
   },
   "keywords": [
     "typescript",
@@ -29,6 +30,7 @@
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.16.2",
     "js-yaml": "^4.1.0",
+    "standard-version": "^9.5.0",
     "ts-node": "^10.9.2",
     "typescript": "^4.9.5"
   },
