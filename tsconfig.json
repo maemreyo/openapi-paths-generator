@@ -10,7 +10,9 @@
     "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file
     "resolveJsonModule": true, // Allows importing .json files
     "isolatedModules": true, // Ensures each file can be safely transpiled without depending on other imports
-    "allowSyntheticDefaultImports": true // Allow default imports from modules with no default export
+    "allowSyntheticDefaultImports": true, // Allow default imports from modules with no default export
+    "declaration": true,
+    "declarationMap": true
   },
   "include": ["src/**/*"], // Include all files in the 'src' directory
   "exclude": ["node_modules", "dist"] // Exclude 'node_modules' and 'dist' directories
