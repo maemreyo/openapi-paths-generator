@@ -1,24 +1,28 @@
-/**
- * Logs the start of the generation process.
- */
+import winston from "winston";
+
+export const logger = winston.createLogger({
+  level: "info",
+  format: winston.format.combine(
+    winston.format.colorize(),
+    winston.format.simple()
+  ),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: "api-paths.log" }),
+  ],
+});
+
 export const logStart = () => {
-  console.log("===================================================");
-  console.log("🚀 Starting API Paths generation...");
-  console.log("===================================================\n");
+  logger.info("===================================================");
+  logger.info("🚀 Starting API Paths generation...");
+  logger.info("===================================================\n");
 };
 
-/**
- * Logs the completion of the generation process.
- */
 export const logCompletion = () => {
-  console.log("🎉 API Paths generation completed successfully!");
+  logger.info("🎉 API Paths generation completed successfully!");
 };
 
-/**
- * Logs the creation of a file.
- * @param filePath - The path of the file that was created.
- */
 export const logFileCreation = (filePath: string) => {
-  console.log(`✅ File created: ${filePath}`);
-  console.log("===================================================\n");
+  logger.info(`✅ File created: ${filePath}`);
+  logger.info("===================================================\n");
 };

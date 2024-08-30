@@ -1,6 +1,7 @@
 import path from "path";
 import { ensureDirectoryExists } from "./file";
 import { getNextVersionedDir } from "./versioning";
+import { logger } from "./logging";
 
 /**
  * Handles the preparation of the output directory.
@@ -20,8 +21,8 @@ export const prepareOutputDirectory = (
   );
   ensureDirectoryExists(moduleOutputDir);
 
-  console.log(`📂 Output directory set to: ${moduleOutputDir}`);
-  console.log("===================================================\n");
+  logger.info(`📂 Output directory set to: ${moduleOutputDir}`);
+  logger.info("===================================================\n");
 
   return moduleOutputDir;
 };

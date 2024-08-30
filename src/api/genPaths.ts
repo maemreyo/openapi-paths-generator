@@ -30,7 +30,7 @@ import {
  * };
  *
  * const result = generateApiPaths(paths);
- * console.log(result);
+ * logger.info(result);
  *
  * // Output:
  * // {

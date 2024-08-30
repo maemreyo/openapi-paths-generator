@@ -3,7 +3,7 @@ import { writeFile } from "./file";
 import { getModuleFileName, getIndexFileName } from "./naming";
 import { createModuleFileContent } from "../api/genModule";
 import { createIndexFileContent } from "../api/genIndex";
-import { logFileCreation } from "./logging";
+import { logFileCreation, logger } from "./logging";
 
 /**
  * Processes and writes the module files.
@@ -17,7 +17,7 @@ export const processModules = (
   const modules = Object.keys(apiPaths);
 
   modules.forEach((module) => {
-    console.log(`📝 Generating paths for module: ${module}`);
+    logger.info(`📝 Generating paths for module: ${module}`);
     const moduleContent = createModuleFileContent(module, apiPaths[module]);
     const moduleFilePath = path.join(
       moduleOutputDir,
@@ -28,7 +28,7 @@ export const processModules = (
   });
 
   // Generate and write the index file that aggregates all module paths
-  console.log("🔗 Generating index file...");
+  logger.info("🔗 Generating index file...");
   const indexContent = createIndexFileContent(modules);
   const indexPath = path.join(moduleOutputDir, getIndexFileName());
   writeFile(indexPath, indexContent);

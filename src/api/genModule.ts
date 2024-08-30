@@ -28,7 +28,7 @@ import { FILE_HEADER_COMMENT } from "../constants";
  * };
  *
  * const content = createModuleFileContent(moduleName, apiPaths);
- * console.log(content);
+ * logger.info(content);
  *
  * // Output:
  * // // ===========================================
