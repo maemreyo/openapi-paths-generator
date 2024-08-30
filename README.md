@@ -11,20 +11,22 @@ A TypeScript utility for generating strongly-typed API path functions from an Op
 
 ## Installation
 
-### Via npm
+### Install from GitHub
 
-If you’ve published the package on npm:
+Since this package is distributed through GitHub, you can install it as a devDependency in your project directly from the GitHub repository:
 
 ```bash
-npm install my-api-paths-generator --save-dev
+npm install --save-dev github:maemreyo/openapi-paths-generator#v1.0.0
 ```
+
+Replace `v1.0.0` with the tag or branch you want to use.
 
 ### Local Installation
 
-If you're using this package locally:
+If you're developing or testing the package locally, you can install it using:
 
 ```bash
-npm install ../path/to/my-api-paths-generator --save-dev
+npm install ../path/to/openapi-paths-generator --save-dev
 ```
 
 ## Usage
@@ -36,7 +38,7 @@ Create a script in your Next.js (or any TypeScript) project to invoke the genera
 ```typescript
 // scripts/generateApiPaths.ts
 
-import { generateApiPathsFromSpec } from 'my-api-paths-generator';
+import { generateApiPathsFromSpec } from 'openapi-paths-generator';
 
 const openApiPath = './path/to/openapi.yaml'; // Adjust this path as needed
 const outputDir = './src/api'; // Directory where API paths will be generated
@@ -76,12 +78,12 @@ The tool will generate TypeScript files in the specified output directory, struc
 
 ```plaintext
 src/api/
-├── moduleAPaths.ts
-├── moduleBPaths.ts
+├── moduleA.ts
+├── moduleB.ts
 └── index.ts
 ```
 
-Each `modulePaths.ts` file contains path functions for the corresponding API module, and `index.ts` aggregates all the paths for easy import.
+Each `module.ts` file contains path functions for the corresponding API module, and `index.ts` aggregates all the paths for easy import.
 
 ### 4. Using the Generated Paths
 
@@ -105,13 +107,19 @@ To compile the TypeScript code:
 npm run build
 ```
 
-### Publishing
+### Using a Local Version
 
-If you intend to publish this package to npm, make sure to bump the version in `package.json` and then publish:
+If you are developing or testing the package locally and need to link it to another project, you can use npm link:
 
 ```bash
-npm publish
+# In the openapi-paths-generator directory
+npm link
+
+# In the project where you want to use it
+npm link openapi-paths-generator
 ```
+
+This allows you to use your local changes in your project without publishing them.
 
 ## Contributing
 

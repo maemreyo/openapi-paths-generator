@@ -1,18 +1,20 @@
 import fs from "fs";
+import yaml from "js-yaml";
 
 /**
  * Reads and parses a YAML file.
- * @param filePath - Path to the YAML file.
- * @returns The parsed YAML content as an object.
+ * @param filePath - The path to the YAML file.
+ * @returns The parsed YAML content as a JavaScript object.
  */
 export const readYamlFile = <T>(filePath: string): T => {
   const content = fs.readFileSync(filePath, "utf8");
-  return JSON.parse(content) as T;
+  // Parse the YAML content using js-yaml
+  return yaml.load(content) as T;
 };
 
 /**
- * Ensures the given directory exists; if not, creates it.
- * @param dirPath - Path to the directory.
+ * Ensures that the specified directory exists, creating it if necessary.
+ * @param dirPath - The directory path.
  */
 export const ensureDirectoryExists = (dirPath: string): void => {
   if (!fs.existsSync(dirPath)) {
@@ -22,9 +24,9 @@ export const ensureDirectoryExists = (dirPath: string): void => {
 
 /**
  * Writes content to a file.
- * @param filePath - Path to the file.
+ * @param filePath - The path to the file.
  * @param content - The content to write to the file.
  */
 export const writeFile = (filePath: string, content: string): void => {
-  fs.writeFileSync(filePath, content);
+  fs.writeFileSync(filePath, content, "utf8");
 };

@@ -45,3 +45,6 @@ coverage/
 # lockfiles
 package-lock.json
 yarn.lock
+
+# Mocks
+mocks/openapi.yaml

@@ -15,14 +15,18 @@ export const generateApiPathsFromSpec = (
   openApiPath: string,
   outputDir: string
 ): void => {
+  // Ensure the output directory exists
+  ensureDirectoryExists(outputDir);
+
   const pathsConfig: PathsConfig = resolvePaths(openApiPath, outputDir);
 
   console.log("===================================================");
   console.log("🚀 Starting API Paths generation...");
   console.log("===================================================\n");
 
-  // Ensure the output directory exists
-  ensureDirectoryExists(pathsConfig.outputDirPath);
+  // Ensure the module-specific output directory exists
+  const moduleOutputDir = path.join(outputDir, "apiPaths");
+  ensureDirectoryExists(moduleOutputDir);
 
   // Read and parse the OpenAPI YAML file
   const openApiDoc: OpenApiDoc = readYamlFile<OpenApiDoc>(
@@ -40,8 +44,8 @@ export const generateApiPathsFromSpec = (
     console.log(`📝 Generating paths for module: ${module}`);
     const moduleContent = createModuleFileContent(module, apiPaths[module]);
     const moduleFilePath = path.join(
-      pathsConfig.outputDirPath,
-      `${module.toLowerCase()}Paths.ts`
+      moduleOutputDir,
+      `${module.toLowerCase()}.ts` // Removed "Paths" from the filename
     );
     writeFile(moduleFilePath, moduleContent);
     console.log(`✅ Module file created: ${moduleFilePath}`);
@@ -51,7 +55,7 @@ export const generateApiPathsFromSpec = (
   // Generate the index file that aggregates all module paths
   console.log("🔗 Generating index file...");
   const indexContent = createIndexFileContent(modules);
-  const indexPath = path.join(pathsConfig.outputDirPath, "index.ts");
+  const indexPath = path.join(moduleOutputDir, "index.ts");
   writeFile(indexPath, indexContent);
   console.log(`✅ Index file created: ${indexPath}`);
   console.log("===================================================\n");
