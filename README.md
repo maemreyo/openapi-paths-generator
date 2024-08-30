@@ -16,7 +16,12 @@ A TypeScript utility for generating strongly-typed API path functions from an Op
 Since this package is distributed through GitHub, you can install it as a devDependency in your project directly from the GitHub repository:
 
 ```bash
-npm install --save-dev github:maemreyo/openapi-paths-generator#v1.0.0
+>>> npm install --save-dev github:maemreyo/openapi-paths-generator#v1.0.0
+
+or
+
+>>> yarn add --dev openapi-paths-generator@github:maemreyo/openapi-paths-generator#v1.0.0
+
 ```
 
 Replace `v1.0.0` with the tag or branch you want to use.
