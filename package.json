@@ -14,6 +14,9 @@
     "prepare": "npm run build",
     "release": "node scripts/release.js"
   },
+  "standard-version": {
+    "preset": "angular"
+  },
   "keywords": [
     "typescript",
     "openapi",
