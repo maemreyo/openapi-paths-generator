@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FILE_HEADER_COMMENT = exports.INDEX_FILE_NAME = exports.MODULE_FILE_EXTENSION = void 0;
 /**
  * File: constants.ts
  *
@@ -10,14 +13,14 @@
  * for generating content in various output files, such as module files and the
  * index file, ensuring uniformity in the generated code.
  */
-export const MODULE_FILE_EXTENSION = ".ts";
-export const INDEX_FILE_NAME = "index.ts";
+exports.MODULE_FILE_EXTENSION = ".ts";
+exports.INDEX_FILE_NAME = "index.ts";
 /**
  * Template strings and other configurable constants.
  * These templates ensure that generated files have a consistent structure and
  * provide clear instructions for regenerating the files when necessary.
  */
-export const FILE_HEADER_COMMENT = `
+exports.FILE_HEADER_COMMENT = `
 // ===========================================
 // Auto-generated file from OpenAPI Specification
 // ===========================================
