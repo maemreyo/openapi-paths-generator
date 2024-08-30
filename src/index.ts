@@ -1,10 +1,19 @@
 import { readYamlFile } from "./utils/file";
-import { resolvePaths } from "./config/paths";
+import { PathsConfig, resolvePaths } from "./config/paths";
 import { generateApiPaths } from "./api/genPaths";
-import { PathsConfig, OpenApiDoc, GenerateApiPathsOptions } from "./types";
 import { logStart, logCompletion } from "./utils/logging";
 import { prepareOutputDirectory } from "./utils/output";
 import { processModules } from "./utils/processing";
+
+export interface GenerateApiPathsOptions {
+  openApiPath: string; // Path to the OpenAPI YAML file
+  outputDir: string; // Path to the output directory
+  customName?: string; // Optional custom name for the apiPaths directory
+}
+
+export interface OpenApiDoc {
+  paths: Record<string, unknown>;
+}
 
 /**
  * Generate API paths based on an OpenAPI spec file.

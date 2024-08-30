@@ -1,5 +1,9 @@
 import path from "path";
-import { PathsConfig } from "../types";
+
+export interface PathsConfig {
+  openApiFilePath: string;
+  outputDirPath: string;
+}
 
 /**
  * Resolve and return the input and output paths for the OpenAPI generation.
