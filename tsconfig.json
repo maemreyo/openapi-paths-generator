@@ -3,7 +3,6 @@
     "target": "ES2020", // Specify ECMAScript target version
     "module": "ESNext", // Specify module code generation: "ESNext" is for ES Modules
     "moduleResolution": "Node", // Use Node module resolution strategy
-    "declaration": true, // Generates corresponding '.d.ts' files
     "outDir": "./dist", // Redirect output structure to the 'dist' directory
     "strict": true, // Enable all strict type-checking options
     "esModuleInterop": true, // Enables compatibility with CommonJS modules
