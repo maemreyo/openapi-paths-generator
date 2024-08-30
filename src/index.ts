@@ -1,12 +1,10 @@
-import path from "path";
-import { ensureDirectoryExists, writeFile, readYamlFile } from "./utils/file";
-import { getNextVersionedDir } from "./utils/versioning";
-import { getModuleFileName, getIndexFileName } from "./utils/naming";
+import { readYamlFile } from "./utils/file";
 import { resolvePaths } from "./config/paths";
 import { generateApiPaths } from "./api/genPaths";
-import { createModuleFileContent } from "./api/genModule";
-import { createIndexFileContent } from "./api/genIndex";
 import { PathsConfig, OpenApiDoc, GenerateApiPathsOptions } from "./types";
+import { logStart, logCompletion } from "./utils/logging";
+import { prepareOutputDirectory } from "./utils/output";
+import { processModules } from "./utils/processing";
 
 /**
  * Generate API paths based on an OpenAPI spec file.
@@ -15,71 +13,39 @@ import { PathsConfig, OpenApiDoc, GenerateApiPathsOptions } from "./types";
 export const generateApiPathsFromSpec = (
   options: GenerateApiPathsOptions
 ): void => {
-  const { openApiPath, outputDir, customName } = options;
+  try {
+    const { openApiPath, outputDir, customName } = options;
 
-  // Ensure the output directory exists
-  ensureDirectoryExists(outputDir);
+    logStart();
 
-  const pathsConfig: PathsConfig = resolvePaths(openApiPath, outputDir);
+    // Prepare the output directory
+    const moduleOutputDir = prepareOutputDirectory(outputDir, customName);
 
-  console.log("===================================================");
-  console.log("🚀 Starting API Paths generation...");
-  console.log("===================================================\n");
+    // Resolve the paths configuration
+    const pathsConfig: PathsConfig = resolvePaths(openApiPath, outputDir);
 
-  // Determine the base directory name
-  const baseName = customName ? `apiPaths_${customName}` : "apiPaths";
-
-  // Get the next available versioned directory name
-  const moduleOutputDir = path.join(
-    outputDir,
-    getNextVersionedDir(outputDir, baseName)
-  );
-  ensureDirectoryExists(moduleOutputDir);
-
-  console.log(`📂 Output directory is set to: ${moduleOutputDir}`);
-  console.log("===================================================\n");
-
-  // Read and parse the OpenAPI YAML file
-  const openApiDoc: OpenApiDoc = readYamlFile<OpenApiDoc>(
-    pathsConfig.openApiFilePath
-  );
-
-  // Generate the API paths
-  const apiPaths = generateApiPaths(
-    openApiDoc.paths as Record<string, unknown>
-  );
-  const modules = Object.keys(apiPaths);
-
-  // Generate files for each module using the centralized naming function
-  modules.forEach((module) => {
-    console.log(`📝 Generating paths for module: ${module}`);
-    const moduleContent = createModuleFileContent(module, apiPaths[module]);
-    const moduleFilePath = path.join(
-      moduleOutputDir,
-      getModuleFileName(module)
+    // Read and parse the OpenAPI YAML file
+    const openApiDoc: OpenApiDoc = readYamlFile<OpenApiDoc>(
+      pathsConfig.openApiFilePath
     );
-    writeFile(moduleFilePath, moduleContent);
-    console.log(`✅ Module file created: ${moduleFilePath}`);
-    console.log("===================================================\n");
-  });
 
-  // Generate the index file that aggregates all module paths (without the underscore)
-  console.log("🔗 Generating index file...");
-  const indexContent = createIndexFileContent(modules);
-  const indexPath = path.join(moduleOutputDir, getIndexFileName()); // Use centralized naming
-  writeFile(indexPath, indexContent);
-  console.log(`✅ Index file created: ${indexPath}`);
-  console.log("===================================================\n");
+    // Generate the API paths and process the modules
+    const apiPaths = generateApiPaths(
+      openApiDoc.paths as Record<string, unknown>
+    );
+    processModules(moduleOutputDir, apiPaths);
 
-  console.log("🎉 API Paths generation completed successfully!");
+    logCompletion();
+  } catch (error) {
+    console.error(
+      "❌ An error occurred during the API paths generation process:",
+      error
+    );
+  }
 };
-
 
 generateApiPathsFromSpec({
   openApiPath: "./mocks/openapi.yaml",
   outputDir: "./mocks",
   customName: "duyhoang",
 });
-
-
-
