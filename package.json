@@ -3,10 +3,12 @@
   "version": "1.0.30",
   "description": "A TypeScript utility for generating strongly-typed API path functions from an OpenAPI YAML specification.",
   "main": "./dist/index.js",
+  "types": "types/index.d.ts",
   "license": "MIT",
   "scripts": {
     "start": "node dist/index.js",
-    "build": "tsc",
+    "build": "tsc && npm run copy-types",
+    "copy-types": "copyfiles -u 1 src/types/index.d.ts dist/",
     "dev": "tsx src/index.ts",
     "watch": "tsc --watch",
     "clean": "rm -rf dist",
@@ -32,6 +34,7 @@
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.16.2",
+    "copyfiles": "^2.4.1",
     "js-yaml": "^4.1.0",
     "standard-version": "^9.5.0",
     "ts-node": "^10.9.2",
