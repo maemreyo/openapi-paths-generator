@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.32](https://github.com/maemreyo/openapi-paths-gen/compare/v1.0.31...v1.0.32) (2024-08-31)
+
+
+
 ## [1.0.31](https://github.com/maemreyo/openapi-paths-gen/compare/v1.0.30...v1.0.31) (2024-08-31)
 
 
