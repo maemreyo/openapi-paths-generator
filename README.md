@@ -16,12 +16,11 @@ A TypeScript utility for generating strongly-typed API path functions from an Op
 Since this package is distributed through GitHub, you can install it as a devDependency in your project directly from the GitHub repository:
 
 ```bash
->>> npm install --save-dev github:maemreyo/openapi-paths-generator#v1.0.0
+npm install --save-dev github:maemreyo/openapi-paths-generator#v1.0.0
 
-or
+# or
 
->>> yarn add --dev openapi-paths-generator@github:maemreyo/openapi-paths-generator#v1.0.0
-
+yarn add --dev openapi-paths-generator@github:maemreyo/openapi-paths-generator#v1.0.0
 ```
 
 Replace `v1.0.0` with the tag or branch you want to use.
@@ -36,9 +35,13 @@ npm install ../path/to/openapi-paths-generator --save-dev
 
 ## Usage
 
+You can use this package in both ESModule and CommonJS environments. Below are the examples for both.
+
 ### 1. Add a Script in Your Project
 
 Create a script in your Next.js (or any TypeScript) project to invoke the generator. Place this script in a `scripts/` directory.
+
+#### TypeScript (ESModule)
 
 ```typescript
 // scripts/generateApiPaths.ts
@@ -48,20 +51,45 @@ import { generateApiPathsFromSpec } from 'openapi-paths-generator';
 const openApiPath = './path/to/openapi.yaml'; // Adjust this path as needed
 const outputDir = './src/api'; // Directory where API paths will be generated
 
-generateApiPathsFromSpec(openApiPath, outputDir);
+generateApiPathsFromSpec({ openApiPath, outputDir });
 
 console.log('API paths generated successfully.');
 ```
 
+#### JavaScript (CommonJS)
+
+```javascript
+// scripts/generateApiPaths.js
+
+const { resolve } = require('path');
+const generateApiPathsFromSpec = require('openapi-paths-generator').default;
+
+const run = () => {
+  const openApiFilePath = resolve(__dirname, './openapi.yaml');
+  const outputDirPath = resolve(__dirname, '../../_configs/');
+
+  generateApiPathsFromSpec({
+    openApiPath: openApiFilePath,
+    outputDir: outputDirPath,
+  });
+
+  console.log('API paths generated successfully.');
+};
+
+run();
+```
+
 ### 2. Run the Script
 
-You can run this script using `ts-node`:
+#### For TypeScript (ESModule)
+
+You can run the TypeScript script using `ts-node`:
 
 ```bash
 npx ts-node scripts/generateApiPaths.ts
 ```
 
-Alternatively, you can add a custom npm script in your `package.json` to simplify the process:
+Or use a custom npm script:
 
 ```json
 {
@@ -71,7 +99,31 @@ Alternatively, you can add a custom npm script in your `package.json` to simplif
 }
 ```
 
-Then, you can run the command:
+Run the command:
+
+```bash
+npm run generate-api-paths
+```
+
+#### For JavaScript (CommonJS)
+
+You can run the JavaScript script directly using Node.js:
+
+```bash
+node scripts/generateApiPaths.js
+```
+
+Or add a custom npm script:
+
+```json
+{
+  "scripts": {
+    "generate-api-paths": "node scripts/generateApiPaths.js"
+  }
+}
+```
+
+Then, run the command:
 
 ```bash
 npm run generate-api-paths
@@ -94,8 +146,20 @@ Each `module.ts` file contains path functions for the corresponding API module, 
 
 You can now import and use the generated paths in your project:
 
+#### TypeScript (ESModule)
+
 ```typescript
 import { API_PATHS } from './api';
+
+const userDetailPath = API_PATHS.USER_DETAIL({ userId: '123' });
+
+console.log(userDetailPath); // Outputs: /users/123
+```
+
+#### JavaScript (CommonJS)
+
+```javascript
+const { API_PATHS } = require('./api');
 
 const userDetailPath = API_PATHS.USER_DETAIL({ userId: '123' });
 
